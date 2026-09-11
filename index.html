@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全國高級中等學校小論文寫作比賽 - 官方完整格式規範與工具</title>
+    <style>
+        :root {
+            --primary: #1E3A8A;
+            --primary-light: #EFF6FF;
+            --secondary: #0D9488;
+            --accent: #D97706;
+            --danger: #DC2626;
+            --danger-light: #FEF2F2;
+            --bg: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #0F172A;
+            --text-muted: #475569;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "新細明體", "PMingLiU", "PingFang TC", "Microsoft JhengHei", sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); line-height: 1.8; font-size: 17px; padding-bottom: 80px; }
+
+        header {
+            position: sticky; top: 0; background: linear-gradient(135deg, var(--primary), #2563EB);
+            color: white; padding: 20px 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); z-index: 1000; text-align: center;
+        }
+        header h1 { font-size: 1.6rem; margin-bottom: 8px; font-weight: bold; }
+
+        .search-box-container { max-width: 600px; margin: 10px auto; display: flex; gap: 8px; }
+        .search-box { width: 100%; padding: 10px 18px; border-radius: 25px; border: 2px solid rgba(255, 255, 255, 0.5); background: rgba(255, 255, 255, 0.95); font-size: 1rem; outline: none; color: #000; }
+        .clear-search-btn { background: rgba(255,255,255,0.3); border: none; color: white; border-radius: 20px; padding: 0 16px; cursor: pointer; font-size: 0.9rem; white-space: nowrap; }
+
+        nav { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+        nav button { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 8px 14px; border-radius: 6px; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+        nav button:hover, nav button.active { background: white; color: var(--primary); }
+
+        .container { max-width: 960px; margin: 30px auto; padding: 0 20px; }
+        .unit-section { display: none; animation: fadeIn 0.3s ease-in-out; }
+        .unit-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card { background: var(--card-bg); border-radius: 12px; padding: 28px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-left: 6px solid var(--primary); }
+        .card.danger { border-left-color: var(--danger); background: #FFF; }
+        .card.accent { border-left-color: var(--accent); }
+
+        h2 { font-size: 1.4rem; color: var(--primary); margin-bottom: 16px; border-bottom: 2px solid var(--primary-light); padding-bottom: 8px; }
+        h3 { font-size: 1.15rem; color: #1E293B; margin: 20px 0 10px 0; font-weight: bold; }
+        p { margin-bottom: 12px; text-align: justify; }
+        ul, ol { margin-left: 24px; margin-bottom: 16px; }
+        li { margin-bottom: 8px; }
+
+        .example-box { background-color: #F1F5F9; border-left: 4px solid var(--primary); padding: 15px; border-radius: 6px; margin: 12px 0; font-size: 0.95rem; word-break: break-all; }
+        .danger-box { background-color: var(--danger-light); border: 1px solid #FCA5A5; color: #991B1B; padding: 16px; border-radius: 8px; margin: 15px 0; }
+        mark.search-highlight { background-color: #FDE047; color: #000; padding: 2px 4px; border-radius: 3px; font-weight: bold; }
+
+        .gen-form { background: #F8FAFC; padding: 20px; border-radius: 10px; border: 1px solid #E2E8F0; }
+        .gen-form label { display: block; margin-top: 12px; font-weight: bold; font-size: 0.95rem; color: #334155; }
+        .gen-form input, .gen-form select { width: 100%; padding: 10px; margin-top: 6px; border-radius: 6px; border: 1px solid #CBD5E1; font-size: 0.95rem; }
+        .gen-btn { background: var(--primary); color: white; border: none; padding: 12px; margin-top: 20px; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; width: 100%; transition: background 0.2s; }
+        .gen-btn:hover { background: #1D4ED8; }
+
+        .check-item { display: flex; align-items: flex-start; gap: 12px; padding: 14px; background: #FFF; margin-bottom: 10px; border-radius: 8px; border: 1px solid #E2E8F0; cursor: pointer; }
+        .check-item:hover { background: #F8FAFC; }
+        .check-item input[type="checkbox"] { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--danger); flex-shrink: 0; }
+
+        footer { text-align: center; padding: 30px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid #E2E8F0; margin-top: 40px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>全國高級中等學校小論文寫作比賽官方完整規範</h1>
+        <div class="search-box-container">
+            <input type="text" id="searchInput" class="search-box" placeholder="🔍 搜尋全文條文與格式（例如：淘汰、頁首、粗體、YouTube...）" oninput="handleSearch()">
+            <button class="clear-search-btn" onclick="clearSearch()">清除</button>
+        </div>
+        <nav>
+            <button class="nav-btn active" onclick="switchUnit(0)">🚨 淘汰與審查標準</button>
+            <button class="nav-btn" onclick="switchUnit(1)">📄 版面與格式規定</button>
+            <button class="nav-btn" onclick="switchUnit(2)">✍️ 壹、引註格式完整範例</button>
+            <button class="nav-btn" onclick="switchUnit(3)">📚 貳、參考文獻官方範例</button>
+            <button class="nav-btn" style="background:#059669;" onclick="switchUnit(4)">🛠️ 參考文獻產生器</button>
+            <button class="nav-btn" style="background:#DC2626;" onclick="switchUnit(5)">📋 淘汰風險自檢表</button>
+        </nav>
+    </header>
+
+    <div class="container" id="contentContainer">
+
+        <!-- 淘汰與審查標準 -->
+        <section class="unit-section active" data-unit="0">
+            <div class="card danger search-target">
+                <h2>🚨 進入中學生網站管理端刪除/直接【予以淘汰】條款</h2>
+                <div class="danger-box">
+                    <strong>⚠️ 以下情形由評審與後台管理端直接【予以淘汰】或刪除，請務必嚴格核對：</strong>
+                </div>
+                <ol>
+                    <li><strong>無法開啟之作品。</strong></li>
+                    <li><strong>作者資料有誤：</strong>超過三人或不同年級參賽。</li>
+                    <li><strong>年級錯誤。</strong></li>
+                    <li><strong>上傳作品含封面頁。</strong>（絕對不可加封面！）</li>
+                    <li><strong>全篇無頁首。</strong>（頁首不完整，如第 1 頁無頁首，併版面規定扣分）。</li>
+                    <li><strong>篇名不一致：</strong>學生報名時於中學生網站登載之參賽篇名與參賽作品內文頁首篇名文字不一致。</li>
+                    <li><strong>格式不符六大架構或未按順序書寫：</strong>
+                        <ul>
+                            <li>中文類必備：「壹、前言」、「貳、文獻探討」、「參、研究方法」、「肆、研究分析與結果」、「伍、研究結論與建議」、「陸、參考文獻」。</li>
+                            <li>英文類必備：I. Introduction / II. Literature Review / III. Research Methods / IV. Analysis and Results / V. Conclusion and Suggestions / Ⅵ. References。</li>
+                        </ul>
+                    </li>
+                    <li><strong>違規重複投稿：</strong>一人投稿二篇以上或相同作品投稿不同類別。</li>
+                    <li><strong>篇幅不符：</strong>篇幅少於 4 頁或超過 10 頁（含附錄）。</li>
+                    <li><strong>參考文獻違規：</strong>少於 3 篇，或全部來自第貳條第二項第（七）款之網路相關資源。</li>
+                    <li><strong>重複發表：</strong>參賽作品已於校外出版、全文發表、獲獎或一稿多投。</li>
+                    <li><strong>AI 生成：</strong>作品內容（含摘要、改寫、圖表等）係由 AI 工具生成。</li>
+                    <li><strong>內容涉及抄襲之文章。</strong></li>
+                    <li><strong>透露作者身分：</strong>題目、內文或附錄出現足以辨識作者身分的資料（含作者照片，若照片中人物係他人請註明非作者本人）。<i>（校名不在此範圍）</i></li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- 版面與格式規定 -->
+        <section class="unit-section" data-unit="1">
+            <div class="card search-target">
+                <h2>📄 篇幅、版面與結構說明</h2>
+
+                <h3>壹、篇幅規定</h3>
+                <p>小論文篇幅以 <strong>A4 紙張 4 至 10 頁為限</strong>（含附錄）。</p>
+
+                <h3>貳、版面規定</h3>
+                <ul>
+                    <li><strong>字體字型：</strong>
+                        <ul>
+                            <li>中文：繁體中文<strong>新細明體 12 級字</strong>打字。</li>
+                            <li>英文：<strong>Times New Roman 12 級字</strong>打字。</li>
+                            <li>顏色與效果：<strong>限以黑色字體，且不可使用底線、斜體、粗體</strong>（原文引用及參考文獻之書名、期刊名及卷期除外）。各學門專有名詞依其標準。</li>
+                            <li>標點符號：中文請用<strong>全型標點符號</strong>，英文請用<strong>半型標點符號</strong>。</li>
+                        </ul>
+                    </li>
+                    <li><strong>版面編排：</strong>
+                        <ul>
+                            <li><strong>單行間距</strong>。</li>
+                            <li>邊界：<strong>上下左右各留 2 公分</strong>。</li>
+                            <li>所有標題皆須單獨成行。</li>
+                            <li>段落開頭須整齊一致。</li>
+                        </ul>
+                    </li>
+                    <li><strong>頁首及頁尾：</strong>
+                        <ul>
+                            <li>每頁頁首須加入小論文篇名，頁尾插入頁碼。</li>
+                            <li>文字為 <strong>10 級字、置中</strong>。</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>參、文章層次與引用細節</h3>
+                <ul>
+                    <li><strong>中文層次建議：</strong>一、 → （一） → 1、 → （1）</li>
+                    <li><strong>英文層次建議：</strong>Ⅰ. → (Ⅰ) → Ａ. → （A）</li>
+                    <li><strong>字數限制：</strong>同一處引用參考資料之原文<strong>不得超過 50 字</strong>（不含標點符號），詩文、歌詞、劇本、法律條文不在此限。直接引用須以<strong>粗體並加「」</strong>標明。</li>
+                    <li><strong>圖表規定：</strong>編號及標題均置於圖表上方置左。引用圖表須於圖表下方註明資料來源；若表內整理內容引用自文獻，可直接在表中標示「作者（年代）」。若非引用，須註明「研究者自行繪製（拍攝、製作……）」。</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 壹、引註格式完整範例 -->
+        <section class="unit-section" data-unit="2">
+            <div class="card search-target">
+                <h2>✍️ 壹、引註格式（官方完整規範與範例）</h2>
+                
+                <h3>一、注意事項</h3>
+                <p>在正文中確實有提及、參考引用之資料，一律採用<strong>（姓名，年代）</strong>或<strong>姓名（年代）</strong>的引註格式，<strong>不使用註一、註二、頁下註（footnote）</strong>方式書寫。</p>
+
+                <h3>二、格式舉例</h3>
+                <ul>
+                    <li><strong>（一）英文文獻：</strong> 姓氏(出版或發表年代) 或 (姓氏，出版或發表年代)。
+                        <div class="example-box">
+                            如：Porter (2001)指出…；或… (Porter, 2001)。<br>
+                            <strong>作者 3 人以上：</strong>只列出第一位，其他作者以 "et al." 呈現。
+                        </div>
+                    </li>
+                    <li><strong>（二）中文文獻：</strong> 姓名（出版或發表年代）或（姓名，出版或發表年代）。
+                        <div class="example-box">
+                            如：吳清山（2001）指出…；或…（吳清山，2001）。<br>
+                            <strong>作者 3 人以上：</strong>只列出第一位，其他作者以「等」呈現。<br><br>
+                            <strong>例 1：</strong>張清濱（2005）指出「教育視導乃是教育行政人員藉由視察與輔導的歷程，督促學校貫徹教育政策與措施。」<br>
+                            <strong>例 2：</strong>教育選擇權的定義為：「基於受教者之需求與福祉，進而選擇對其最適當教育的權利。」（秦夢群，2013）
+                        </div>
+                    </li>
+                    <li><strong>例 3、作者為機構或團體：</strong>
+                        <div class="example-box">
+                            <strong>(1) 無簡稱：</strong>須列出全稱，例：教育部（2020）…或（教育部，2020）。<br>
+                            <strong>(2) 有簡稱：</strong>第一次引用列全稱，並於全稱後用方括號帶出簡稱，後續引用則列簡稱即可（但在參考文獻中仍須列出全稱）。<br>
+                            ・<em>第一次引用：</em>衛生福利部疾病管制署〔疾管署〕（2020）指出…；或…（衛生福利部疾病管制署〔疾管署〕，2020）。<br>
+                            ・<em>第二次引用：</em>疾管署（2020）指出…；或…（疾管署，2020）。
+                        </div>
+                    </li>
+                </ul>
+
+                <h3>三、間接（改寫）引用與圖表引用</h3>
+                <ul>
+                    <li>間接（改寫）引用，亦必須註明出處，但<strong>不必加「」引號、亦不用粗體</strong>。</li>
+                    <li>若圖表係引用，均須於圖表下方註明資料來源，書寫方式與「陸、參考文獻」同。圖表之編號及標題均置於圖表上方置左。</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 貳、參考文獻官方範例 -->
+        <section class="unit-section" data-unit="3">
+            <div class="card search-target">
+                <h2>📚 貳、參考文獻（官方完整範例庫）</h2>
+                <p>在正文中確實有參考引用的文獻均須列入「陸、參考文獻」；未參考引用者不得列入。</p>
+
+                <h3>（一）書籍類</h3>
+                <div class="example-box">
+                    <strong>1. 中文格式：</strong>作者（出版年）。書名。出版者。<br>
+                    ● 一位作者：張春興（2001）。教育心理學（修訂版）。東華書局。<br>
+                    ● 二位作者：曾文星、徐靜（1982）。精神醫學。水牛出版社。<br>
+                    ● 編輯的書本：孫煜明（主編）（1993）。動機心理學。南京大學出版社。<br>
+                    ● 翻譯著作：林翠湄（譯）（1995）。社會與人格發展（原作者：D. R. Shaffer）。心理出版社。（原著出版年：1994）<br>
+                    ● 機構團體：教育部訓育委員會（1991）。台灣地區國中、高中階段少年犯罪資料分析。教育部訓育委員會。<br>
+                    ● 無作者或編者：昌黎先生集。<br><br>
+                    <strong>2. 英文格式：</strong>Author. (Date of publication). Book title. Publication information.<br>
+                    ● Klausmeier, H. J. (1985). Educational psychology. Harper & Row.<br>
+                    ● Leahey, T. H., & Harris, R. J. (1989). Human learning (2nd ed.). Pernice-Hall.<br>
+                    ● Educational Products Information Exchange. (1990). Report of computer-based integrated instructional systems. Author.<br>
+                    ● Letheridge, S., & Cannon, C. R. (Eds.). (1980). Bilingual Education: Teaching English as a second language. Praeger.<br>
+                    ● Merriam-Webster’s collegiate dictionary (10th ed.). (1993). Merriam-Webster.<br><br>
+                    <strong>3. 電子書格式：</strong>作者（年代）。書名。網址（可用短網址）<br>
+                    ● 劉政暉（2018）。學校最該教什麼？直擊12種非典型教育現場。https://ebookdrm.nlp.edu.tw/ebookservice/epubreader/hyread/v3/reader.jsp
+                </div>
+
+                <h3>（二）期刊論文類</h3>
+                <div class="example-box">
+                    <strong>1. 中文格式：</strong>作者（出版年）。論文篇名。期刊名，卷（期），起訖頁碼。<br>
+                    ● 林生傳（1994）。實習教師的困擾問題與輔導之研究。教育學刊，10，33-103。<br>
+                    ● 吳裕益、張酒雄、張玉茹（1998）。國中學生英語學習成就測驗的編製、分析、與常模建立。測驗年刊，45（2），109-134。<br><br>
+                    <strong>2. 英文格式：</strong>Author. (Date of publication). Title of article. Name of the Periodical, Volume(Issue), Inclusive page numbers.<br>
+                    ● Paivio, A. (1975). Percepyual comparisons through the mind's eye. Memory & Cognition, 3, 635-647.<br>
+                    ● Becker, L. J., & Seligman, C. (1981). Welcome to the energy crisis. Journal of Social Issues, 37(2), 1-7.<br><br>
+                    <strong>3. 電子期刊：</strong><br>
+                    ● 林基興（2003年6月24日）。老化面面觀專輯。科學月刊，402，472-473。http://www.scimonth.com.tw/catalog.php?arid=436<br>
+                    ● Zehr, M. A. (1977, October 13). Teaching the teachers. Education Week, 17(11), 24-29. http://www.edweek.org/sreports/tc/<br><br>
+                    <strong>⚠️ 卷期粗斜體說明：</strong><br>
+                    ・中文：有卷期者，<strong>卷數用粗體字</strong>，期數加圓括弧不用粗體；無卷期者，<strong>期數用粗體字</strong>。<br>
+                    ・英文：有卷期者，<i>卷數用斜體字</i>，期數加圓括弧不用斜體；無卷期者，<i>期數用斜體字</i>。
+                </div>
+
+                <h3>（三）文集論文、博碩士論文、報紙、法規</h3>
+                <div class="example-box">
+                    <strong>文集論文：</strong>王家通（2000）。論教育機會的均等與公平：以概念分析為中心。載於國立高雄師範大學教育學系（主編）：教育基本法相關議題研討會會議手冊‧論文彙編（63-77）。國立高雄師範大學教育學系。<br><br>
+                    <strong>碩博士論文（紙本/電子）：</strong><br>
+                    ● 鄒慧英（1989）。高中男女分校與其學校性別角色、成就動機之關係。國立高雄師範大學教育研究所：碩士論文。<br>
+                    ● 簡菲莉（2019）。十二年國教課綱高中自主學習建制化之實踐研究。國立臺灣師範大學教育研究所：博士論文。https://hdl.handle.net/11296/2vx6u6<br><br>
+                    <strong>報紙 / 電子報：</strong><br>
+                    ● 朱雲漢（2000年9月18日）。知識經濟的憧憬與陷阱。中國時報，2版。<br>
+                    ● 李家同（2021年1月26日）。科技．人文聯合講座／素養不該和入學制度掛勾。聯合新聞網。https://udn.com/news/story/7339/5203592<br><br>
+                    <strong>法規：</strong>法律名稱（公布日期）。例如：師資培育法（2000年12月18日）。
+                </div>
+
+                <h3>（四）第（七）款 網路相關資源</h3>
+                <div class="example-box">
+                    <strong>1. 網路資料：</strong>網站名稱（登載年月日）。文章名稱。網址（可用短網址）<br>
+                    ● 教育部全球資訊網（2020年3月12日）。十二年國民基本教育實施計畫。https://reurl.cc/a5G9AG<br><br>
+                    <strong>2. 有作者與篇名：</strong>詹益鑑（2016年8月8日）。Uber在臺灣到底挑戰了什麼？。https://www.bnext.com.tw/article/40529/BN-2016-08-08-165510-77<br><br>
+                    <strong>3. 無出版日期：</strong>作者（無日期）。文章名稱。擷取日期，取自網址<br><br>
+                    <strong>4. 社群與影音平台：</strong><br>
+                    ● YouTube：TED（2012年12月30日）。蔣勳：留十八分鐘給自己［影片］。YouTube。https://www.youtube.com/watch?v=6i7RcP39NB0<br>
+                    ● Facebook：中華民國行政院（2021年1月14日）。防疫是長期抗戰，團結才能守住台灣［圖片］。Facebook。https://www.facebook.com/ey.gov.tw/photos/a.449506128410605/4105067726187742/<br>
+                    ● 部落格：陳勇延（2019年12月5日）。你的學習歷程是有序的故事或雜亂的堆積？［部落格文章］。http://yungyenchen.blogspot.com/2019/12/blog-post_5.html
+                </div>
+            </div>
+        </section>
+
+        <!-- 參考文獻產生器 -->
+        <section class="unit-section" data-unit="4">
+            <div class="card search-target">
+                <h2>🛠️ 官方全格式參考文獻自動產生器</h2>
+                <p>依據比賽官方 105-110 年修正之標準範例格式自動生成：</p>
+                <div class="gen-form">
+                    <label>選擇文獻類型：</label>
+                    <select id="genType" onchange="updateGenFields()">
+                        <option value="book_zh">📖 中文書籍</option>
+                        <option value="book_en">📖 英文書籍</option>
+                        <option value="journal_zh">📰 中文期刊論文</option>
+                        <option value="journal_en">📰 英文期刊論文</option>
+                        <option value="thesis">🎓 碩博士論文</option>
+                        <option value="news">🗞️ 報紙 / 電子報</option>
+                        <option value="law">⚖️ 法規</option>
+                        <option value="web_general">🌐 網路資料 (有網站名稱/無作者)</option>
+                        <option value="web_author">🌐 網路文章 (有作者)</option>
+                        <option value="web_nodate">🌐 網路資料 (無日期)</option>
+                        <option value="yt">▶️ YouTube 影片</option>
+                        <option value="fb">📘 Facebook 貼文</option>
+                        <option value="blog">✍️ 部落格文章</option>
+                    </select>
+
+                    <div id="dynamicInputs"></div>
+
+                    <button class="gen-btn" onclick="generateCitation()">✨ 產生官方標準格式</button>
+                </div>
+
+                <div id="genResult" class="example-box" style="display:none; margin-top:20px; background:#FFF; border:2px dashed var(--primary);">
+                    <strong>格式結果（複製後請依筆劃或字母排序）：</strong>
+                    <p id="resultText" style="font-size:1.1rem; color:#0F172A; margin-top:8px; line-height:1.8;"></p>
+                    <button onclick="copyResult()" style="margin-top:10px; padding:8px 16px; cursor:pointer; background:var(--primary); color:white; border:none; border-radius:4px;">📋 複製文字</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 淘汰風險自檢表 -->
+        <section class="unit-section" data-unit="5">
+            <div class="card danger search-target">
+                <h2>📋 投稿前「直接淘汰」14 項嚴格檢核表</h2>
+                <p>上傳至中學生網站前，請一項一項勾選核對。<strong>只要有一項不符合，將直接被淘汰！</strong></p>
+                <div class="check-list">
+                    <label class="check-item"><input type="checkbox" onchange="checkStatus()"> 1. 檔案可正常開啟，且完全沒有封面頁。</label>
+                    <label class="check-item"><input type="checkbox" onchange="checkStatus()"> 2. 每頁「頁首」皆有小論文篇名（10級字置中），且與報名登載之篇名完全一致。</label>
+                    <label class="check-item"><input type="checkbox" onchange="checkStatus()"> 3. 每頁「頁尾」皆有頁碼（10級字置中）。</label>
+                    <label class="check-item"><input type="checkbox" onchange="checkStatus()"> 4. 總頁數嚴格限制在 4 至 10 頁之間（包含附錄）。</label>
+                    <label class="check-item"><input type="checkbox" onchange="checkStatus()"> 5. 格式完全符合六大架構順序（壹、前言，貳、文獻探討，參、研究方法，肆、研究分析與結果，伍、研究結論與建議，陸、參考文獻）。</label>
+                    <label class="check-item"><input type="checkbox" onchange="checkStatus()"> 6. 全文沒有出現任何「註一、註二」或頁下註（footnote）。</label>
+                    <label class="check-item"><input type="checkbox" onchange="checkStatus()"> 7. 內文引註皆為（姓名，年代）格式；直接引用加「」且粗體、不超過 50 字。</label>
+                    <label class="check-item"><input type="checkbox" onchange="checkStatus()"> 8. 有效參考文獻達 3 篇以上，且【沒有】全部都是網路相關資源。</label>
+                    <label class="check-item"><input type="checkbox" onchange="checkStatus()"> 9. 正文引用的文獻，皆有完整列在「陸、參考文獻」段落中。</label>
+                    <label class="check-item"><input type="checkbox" onchange="checkStatus()"> 10. 字體為中文新細明體 12 級 / 英文 Times New Roman 12 級，單行間距，上下左右邊界 2 公分。</label>
+                    <label class="check-item"><input type="checkbox" onchange="checkStatus()"> 11. 全文（包含內文、圖表、附錄照片）絕對沒有出現作者姓名或辨識身分之資料。</label>
+                    <label class="check-item"><input type="checkbox" onchange="checkStatus()"> 12. 文章內容（包含摘要、改寫、圖表）絕無使用任何 AI 工具生成。</label>
+                    <label class="check-item"><input type="checkbox" onchange="checkStatus()"> 13. 作者人數不超過三人，且同組學生為同一年級。</label>
+                    <label class="check-item"><input type="checkbox" onchange="checkStatus()"> 14. 未曾於校外出版、全文發表、獲獎或一稿多投。</label>
+                </div>
+
+                <div id="checkSuccess" class="danger-box" style="display:none; background:#D1FAE5; border-color:#10B981; color:#065F46;">
+                    🎉 <strong>恭喜！14 項淘汰指標皆已通關！</strong> 請務必再次請指導老師核對後投稿。
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>全國高級中等學校小論文寫作比賽引註及參考文獻格式規範完整收錄版</p>
+    </footer>
+
+    <script>
+        function switchUnit(index) {
+            document.getElementById('searchInput').value = ''; clearHighlights();
+            document.querySelectorAll('.unit-section').forEach((sec, i) => sec.classList.toggle('active', i === index));
+            document.querySelectorAll('.nav-btn').forEach((btn, i) => btn.classList.toggle('active', i === index));
+        }
+
+        const inputTemplates = {
+            book_zh: [
+                { id: 'author', label: '作者：', ph: '例如：張春興' },
+                { id: 'year', label: '出版年：', ph: '例如：2001' },
+                { id: 'title', label: '書名：', ph: '例如：教育心理學（修訂版）' },
+                { id: 'publisher', label: '出版者：', ph: '例如：東華書局' }
+            ],
+            book_en: [
+                { id: 'author', label: 'Author：', ph: '例如：Klausmeier, H. J.' },
+                { id: 'year', label: 'Year：', ph: '例如：1985' },
+                { id: 'title', label: 'Book Title：', ph: '例如：Educational psychology' },
+                { id: 'publisher', label: 'Publisher：', ph: '例如：Harper & Row' }
+            ],
+            journal_zh: [
+                { id: 'author', label: '作者：', ph: '例如：林生傳' },
+                { id: 'year', label: '出版年：', ph: '例如：1994' },
+                { id: 'title', label: '論文篇名：', ph: '例如：實習教師的困擾問題與輔導之研究' },
+                { id: 'journal', label: '期刊名：', ph: '例如：教育學刊' },
+                { id: 'vol', label: '卷（期）：', ph: '例如：10 或 45（2）' },
+                { id: 'pages', label: '起訖頁碼：', ph: '例如：33-103' }
+            ],
+            journal_en: [
+                { id: 'author', label: 'Author：', ph: '例如：Becker, L. J., & Seligman, C.' },
+                { id: 'year', label: 'Year：', ph: '例如：1981' },
+                { id: 'title', label: 'Article Title：', ph: '例如：Welcome to the energy crisis' },
+                { id: 'journal', label: 'Journal Name：', ph: '例如：Journal of Social Issues' },
+                { id: 'vol', label: 'Volume(Issue)：', ph: '例如：37(2)' },
+                { id: 'pages', label: 'Pages：', ph: '例如：1-7' }
+            ],
+            thesis: [
+                { id: 'author', label: '作者：', ph: '例如：簡菲莉' },
+                { id: 'year', label: '出版年：', ph: '例如：2019' },
+                { id: 'title', label: '篇名：', ph: '例如：十二年國教課綱高中自主學習建制化之實踐研究' },
+                { id: 'school', label: '學校研究所：', ph: '例如：國立臺灣師範大學教育研究所' },
+                { id: 'degree', label: '學位：', ph: '例如：博士論文 或 碩士論文' },
+                { id: 'url', label: '網址（選填，電子論文填寫）：', ph: '例如：https://hdl.handle.net/...' }
+            ],
+            news: [
+                { id: 'author', label: '作者：', ph: '例如：李家同' },
+                { id: 'date', label: '年月日：', ph: '例如：2021年1月26日' },
+                { id: 'title', label: '篇名：', ph: '例如：素養不該和入學制度掛勾' },
+                { id: 'paper', label: '報紙或電子報名稱：', ph: '例如：聯合新聞網 或 中國時報，2版' },
+                { id: 'url', label: '網址（電子報填寫）：', ph: '例如：https://udn.com/...' }
+            ],
+            law: [
+                { id: 'title', label: '法律名稱：', ph: '例如：師資培育法' },
+                { id: 'date', label: '公布日期：', ph: '例如：2000年12月18日' }
+            ],
+            web_general: [
+                { id: 'site', label: '網站名稱：', ph: '例如：教育部全球資訊網' },
+                { id: 'date', label: '登載年月日：', ph: '例如：2020年3月12日' },
+                { id: 'title', label: '文章名稱：', ph: '例如：十二年國民基本教育實施計畫' },
+                { id: 'url', label: '網址：', ph: '例如：https://reurl.cc/a5G9AG' }
+            ],
+            web_author: [
+                { id: 'author', label: '作者：', ph: '例如：詹益鑑' },
+                { id: 'date', label: '登載年月日：', ph: '例如：2016年8月8日' },
+                { id: 'title', label: '文章名稱：', ph: '例如：Uber在臺灣到底挑戰了什麼？' },
+                { id: 'url', label: '網址：', ph: '例如：https://www.bnext.com.tw/...' }
+            ],
+            web_nodate: [
+                { id: 'author', label: '作者：', ph: '例如：張三' },
+                { id: 'fetchDate', label: '擷取日期：', ph: '例如：2023年5月10日' },
+                { id: 'title', label: '文章名稱：', ph: '例如：網頁標題' },
+                { id: 'url', label: '網址：', ph: '例如：https://...' }
+            ],
+            yt: [
+                { id: 'name', label: '名稱/頻道名：', ph: '例如：TED' },
+                { id: 'date', label: '登載年月日：', ph: '例如：2012年12月30日' },
+                { id: 'title', label: '標題：', ph: '例如：蔣勳：留十八分鐘給自己' },
+                { id: 'url', label: '網址：', ph: '例如：https://www.youtube.com/...' }
+            ],
+            fb: [
+                { id: 'name', label: '名稱：', ph: '例如：中華民國行政院' },
+                { id: 'date', label: '登載年月日：', ph: '例如：2021年1月14日' },
+                { id: 'title', label: '標題：', ph: '例如：防疫是長期抗戰，團結才能守住台灣' },
+                { id: 'type', label: '類型：', ph: '例如：圖片 或 動態貼文 / 相簿' },
+                { id: 'url', label: '網址：', ph: '例如：https://www.facebook.com/...' }
+            ],
+            blog: [
+                { id: 'name', label: '作者/部落格名：', ph: '例如：陳勇延' },
+                { id: 'date', label: '登載年月日：', ph: '例如：2019年12月5日' },
+                { id: 'title', label: '文章標題：', ph: '例如：你的學習歷程是有序的故事或雜亂的堆積？' },
+                { id: 'url', label: '網址：', ph: '例如：http://yungyenchen.blogspot.com/...' }
+            ]
+        };
+
+        function updateGenFields() {
+            const type = document.getElementById('genType').value;
+            const container = document.getElementById('dynamicInputs');
+            container.innerHTML = '';
+            inputTemplates[type].forEach(field => {
+                const label = document.createElement('label');
+                label.innerText = field.label;
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.id = 'field_' + field.id;
+                input.placeholder = field.ph;
+                container.appendChild(label);
+                container.appendChild(input);
+            });
+        }
+
+        function generateCitation() {
+            const type = document.getElementById('genType').value;
+            const getVal = (id) => {
+                const el = document.getElementById('field_' + id);
+                return el ? el.value.trim() : '';
+            };
+
+            let res = '';
+            if (type === 'book_zh') res = `${getVal('author')}（${getVal('year')}）。${getVal('title')}。${getVal('publisher')}。`;
+            else if (type === 'book_en') res = `${getVal('author')} (${getVal('year')}). ${getVal('title')}. ${getVal('publisher')}.`;
+            else if (type === 'journal_zh') res = `${getVal('author')}（${getVal('year')}）。${getVal('title')}。${getVal('journal')}，${getVal('vol')}，${getVal('pages')}。`;
+            else if (type === 'journal_en') res = `${getVal('author')} (${getVal('year')}). ${getVal('title')}. ${getVal('journal')}, ${getVal('vol')}, ${getVal('pages')}.`;
+            else if (type === 'thesis') {
+                res = `${getVal('author')}（${getVal('year')}）。${getVal('title')}。${getVal('school')}：${getVal('degree')}。`;
+                if (getVal('url')) res += ` ${getVal('url')}`;
+            } else if (type === 'news') {
+                res = `${getVal('author')}（${getVal('date')}）。${getVal('title')}。${getVal('paper')}。`;
+                if (getVal('url')) res += ` ${getVal('url')}`;
+            } else if (type === 'law') {
+                res = `${getVal('title')}（${getVal('date')}）。`;
+            } else if (type === 'web_general') {
+                res = `${getVal('site')}（${getVal('date')}）。${getVal('title')}。${getVal('url')}`;
+            } else if (type === 'web_author') {
+                res = `${getVal('author')}（${getVal('date')}）。${getVal('title')}。${getVal('url')}`;
+            } else if (type === 'web_nodate') {
+                res = `${getVal('author')}（無日期）。${getVal('title')}。${getVal('fetchDate')}，取自${getVal('url')}`;
+            } else if (type === 'yt') {
+                res = `${getVal('name')}（${getVal('date')}）。${getVal('title')}［影片］。YouTube。${getVal('url')}`;
+            } else if (type === 'fb') {
+                res = `${getVal('name')}（${getVal('date')}）。${getVal('title')}［${getVal('type')}］。Facebook。${getVal('url')}`;
+            } else if (type === 'blog') {
+                res = `${getVal('name')}（${getVal('date')}）。${getVal('title')}［部落格文章］。${getVal('url')}`;
+            }
+
+            document.getElementById('resultText').innerText = res;
+            document.getElementById('genResult').style.display = 'block';
+        }
+
+        function copyResult() {
+            navigator.clipboard.writeText(document.getElementById('resultText').innerText);
+            alert('已成功複製標準格式！');
+        }
+
+        function checkStatus() {
+            const checkboxes = document.querySelectorAll('.check-item input[type="checkbox"]');
+            document.getElementById('checkSuccess').style.display = Array.from(checkboxes).every(cb => cb.checked) ? 'block' : 'none';
+        }
+
+        let originalContent = [];
+        window.onload = function() {
+            updateGenFields();
+            document.querySelectorAll('.search-target').forEach((card, idx) => originalContent[idx] = card.innerHTML);
+        };
+
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.trim();
+            if (query === '') { switchUnit(0); return; }
+            document.querySelectorAll('.search-target').forEach((card, idx) => {
+                const parentSection = card.closest('.unit-section');
+                card.innerHTML = originalContent[idx];
+                if (card.textContent.toLowerCase().includes(query.toLowerCase())) {
+                    parentSection.classList.add('active');
+                    highlightText(card, query);
+                } else { parentSection.classList.remove('active'); }
+            });
+        }
+
+        function highlightText(node, keyword) {
+            const re = new RegExp(`(${escapeRegExp(keyword)})`, 'gi');
+            function innerHighlight(element) {
+                if (element.nodeType === 3 && re.test(element.nodeValue)) {
+                    const span = document.createElement('span');
+                    span.innerHTML = element.nodeValue.replace(re, '<mark class="search-highlight">$1</mark>');
+                    element.parentNode.replaceChild(span, element);
+                } else if (element.nodeType === 1 && element.childNodes) {
+                    for (let i = 0; i < element.childNodes.length; i++) innerHighlight(element.childNodes[i]);
+                }
+            }
+            innerHighlight(node);
+        }
+        function escapeRegExp(str) { return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+        function clearSearch() { document.getElementById('searchInput').value = ''; clearHighlights(); switchUnit(0); }
+        function clearHighlights() { document.querySelectorAll('.search-target').forEach((card, idx) => { if (originalContent[idx]) card.innerHTML = originalContent[idx]; }); }
+    </script>
+</body>
+</html>
